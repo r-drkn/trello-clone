@@ -1,0 +1,17 @@
+.modal {
+  background-color: #bbb;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card {
+  height: 80vh;
+  width: 60vw;
+  background-color: #eee;
+  border-radius: 0.5rem;
+}
