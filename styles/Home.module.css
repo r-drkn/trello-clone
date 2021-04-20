@@ -1,9 +1,8 @@
 .container {
   min-height: 100vh;
-  padding: 0 0.5rem;
+  padding: 10vh 0.5rem;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 .grid {
   display: flex;
@@ -12,12 +11,12 @@
 }
 
 .list {
-  border: 2px solid #ddd;
   border-radius: 0.2rem;
   padding: 0.5rem 1rem;
   width: 250px;
   height: 100%;
   margin-right: 1rem;
+  background-color: rgba(191, 155, 191, 0.133);
 }
 .list span {
   padding-right: 0.5rem;
@@ -55,8 +54,15 @@
   padding: 0.5rem 0rem;
 }
 .cardTitle {
-  padding: 1rem 0rem;
+  margin: 1rem 0rem;
   cursor: pointer;
+  background-color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.2rem;
+  box-shadow: 1px 1px 1px 0.5px #bbb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .flexColumn {
   display: flex;

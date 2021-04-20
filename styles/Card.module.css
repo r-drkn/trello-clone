@@ -14,4 +14,9 @@
   width: 60vw;
   background-color: #eee;
   border-radius: 0.5rem;
+  position: relative;
+}
+.close {
+  height: 2.5rem;
+  float: right;
 }
