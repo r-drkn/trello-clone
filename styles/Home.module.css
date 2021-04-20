@@ -52,6 +52,9 @@
 .listTitle {
   padding-bottom: 1rem;
 }
+.listTitle:hover {
+  cursor: pointer;
+}
 .addCard {
   padding: 1rem 0rem;
 }

@@ -11,10 +11,10 @@ export default function List({ list, setLists, lists }) {
 
   function handleEdit(event) {
     event.preventDefault();
-
     const edittedLists = lists.map((listToEdit) => {
-      listToEdit === list ? value : listToEdit;
+      return listToEdit === list ? value : listToEdit;
     });
+    console.log(edittedLists);
     setLists(edittedLists);
     setEdit(false);
   }
@@ -37,7 +37,6 @@ export default function List({ list, setLists, lists }) {
               value={value}
               onChange={(event) => handleChange(event)}
             />
-            <input type="submit" value="Save" />
           </form>
         </OutsideClickHandler>
       ) : (

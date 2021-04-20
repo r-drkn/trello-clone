@@ -17,7 +17,9 @@ export default function Home() {
       <main className={styles.grid}>
         {lists.map((list) => {
           return (
-            <List list={list} key={list} setLists={setLists} lists={lists} />
+            <div key={list}>
+              <List list={list} setLists={setLists} lists={lists} />
+            </div>
           );
         })}
         <div className={styles.list}>
