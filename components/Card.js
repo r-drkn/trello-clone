@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import OutsideClickHandler from "react-outside-click-handler";
 import styles from "../styles/Home.module.css";
 import CardModal from "./CardModal";
 
@@ -24,13 +25,17 @@ export default function Card({ card, cards, setCards }) {
     <>
       <div className={styles.cardTitle}>
         {edit ? (
-          <form onSubmit={(event) => handleSubmit(event)}>
-            <input
-              type="text"
-              value={value}
-              onChange={(event) => handleChange(event)}
-            />
-          </form>
+          <OutsideClickHandler onOutsideClick={() => setEdit(false)}>
+            <form onSubmit={(event) => handleSubmit(event)}>
+              <input
+                className={styles.input}
+                type="text"
+                value={value}
+                onChange={(event) => handleChange(event)}
+              />
+              <input className={styles.button} type="submit" value="Save" />
+            </form>
+          </OutsideClickHandler>
         ) : (
           <p
             onClick={() => {
@@ -41,10 +46,11 @@ export default function Card({ card, cards, setCards }) {
           </p>
         )}
         <svg
+          className={styles.edit}
           onClick={() => setEdit(true)}
           xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
+          width="20"
+          height="20"
           viewBox="0 0 48 48"
         >
           <path d="M6 34.5V42h7.5l22.13-22.13-7.5-7.5L6 34.5zm35.41-20.41c.78-.78.78-2.05 0-2.83l-4.67-4.67c-.78-.78-2.05-.78-2.83 0l-3.66 3.66 7.5 7.5 3.66-3.66z" />

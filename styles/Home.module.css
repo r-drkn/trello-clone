@@ -39,19 +39,21 @@
   cursor: pointer;
 }
 .button {
-  background-color: rgba(191, 155, 191, 0.133);
+  background-color: rgba(139, 238, 169);
   border-radius: 0.2rem;
   padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  font-size: 1rem;
 }
 .button:hover {
-  background-color: rgba(191, 155, 191, 0.5);
+  background-color: rgba(139, 238, 169, 0.5);
   cursor: pointer;
 }
 .listTitle {
   padding-bottom: 1rem;
 }
 .addCard {
-  padding: 0.5rem 0rem;
+  padding: 1rem 0rem;
 }
 .cardTitle {
   margin: 1rem 0rem;
@@ -74,4 +76,14 @@
   width: 100%;
   align-items: center;
   justify-content: space-between;
+}
+.edit {
+  padding: 3px;
+}
+.edit:hover {
+  background-color: #aaa;
+  border-radius: 0.2rem;
+}
+.addItem {
+  margin: 1rem 0rem;
 }

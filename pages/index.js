@@ -16,7 +16,9 @@ export default function Home() {
 
       <main className={styles.grid}>
         {lists.map((list) => {
-          return <List list={list} key={list} />;
+          return (
+            <List list={list} key={list} setLists={setLists} lists={lists} />
+          );
         })}
         <div className={styles.list}>
           <AddItem item={lists} setItem={setLists} type="list" />
