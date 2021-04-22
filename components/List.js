@@ -4,17 +4,16 @@ import styles from "../styles/Home.module.css";
 import AddItem from "./AddItem";
 import Card from "./Card";
 
-export default function List({ list, setLists, lists }) {
-  const [cards, setCards] = useState([]);
+export default function List({ list, setLists, lists, defaultCards }) {
+  const [cards, setCards] = useState(defaultCards);
   const [edit, setEdit] = useState(false);
-  const [value, setValue] = useState(list);
+  const [value, setValue] = useState(list.name);
 
   function handleEdit(event) {
-    event.preventDefault();
+    event && event.preventDefault();
     const edittedLists = lists.map((listToEdit) => {
-      return listToEdit === list ? value : listToEdit;
+      return listToEdit.name === list.name ? value : listToEdit.name;
     });
-    console.log(edittedLists);
     setLists(edittedLists);
     setEdit(false);
   }
@@ -29,10 +28,13 @@ export default function List({ list, setLists, lists }) {
         <OutsideClickHandler
           onOutsideClick={() => {
             setEdit(false);
+            handleEdit();
+            setValue(value);
           }}
         >
           <form onSubmit={(event) => handleEdit(event)}>
             <input
+              className={styles.editInput}
               type="text"
               value={value}
               onChange={(event) => handleChange(event)}
@@ -46,17 +48,19 @@ export default function List({ list, setLists, lists }) {
             setEdit(true);
           }}
         >
-          {list}
+          {list.name}
         </h4>
       )}
-      {cards.map((card) => {
-        return (
-          <div key={card}>
-            <Card card={card} cards={cards} setCards={setCards} />
-          </div>
-        );
-      })}
-      <AddItem item={cards} setItem={setCards} type="card" />
+      {cards &&
+        cards.length > 0 &&
+        cards.map((card, index) => {
+          return (
+            <div key={index}>
+              <Card listId={list.id} card={card} />
+            </div>
+          );
+        })}
+      <AddItem item={cards} setItem={setCards} type="card" listId={list.id} />
     </div>
   );
 }

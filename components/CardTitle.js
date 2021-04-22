@@ -3,30 +3,22 @@ import OutsideClickHandler from "react-outside-click-handler";
 import styles from "../styles/Home.module.css";
 import CardModal from "./CardModal";
 
-export default function Card({ card, listId }) {
+export default function CardTitle({ card, cards, setCards, type }) {
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
-  const [value, setValue] = useState(card.name);
+  const [value, setValue] = useState(card);
 
   function handleChange(event) {
     setValue(event.target.value);
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault();
-    console.log(card);
-    let edittedCard = card;
-    edittedCard.name = value;
-    console.log(edittedCard);
-    await fetch(`http://localhost:3000/api/cards/${listId}/`, {
-      method: "PATCH",
-      body: JSON.stringify(edittedCard),
-    })
-      .then((res) => res.json)
-      .then((data) => console.log("success", data))
-      .catch((err) => console.error(err));
-
+  function handleSubmit(event) {
+    const edittedCards = cards.map((cardToEdit) =>
+      cardToEdit.name === card.name ? value : cardToEdit.name
+    );
+    setCards(edittedCards);
     setEdit(false);
+    event.preventDefault();
   }
 
   return (
@@ -38,7 +30,7 @@ export default function Card({ card, listId }) {
               <input
                 className={styles.input}
                 type="text"
-                value={value}
+                value={value.name}
                 onChange={(event) => handleChange(event)}
               />
               <input className={styles.button} type="submit" value="Save" />
@@ -48,7 +40,7 @@ export default function Card({ card, listId }) {
           <h5
             className={styles.cardTitleText}
             onClick={() => {
-              setModal(true);
+              type === "modal" && setModal(true);
             }}
           >
             {card.name}

@@ -1,11 +1,20 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 import List from "../components/List";
 import AddItem from "../components/AddItem";
 
 export default function Home() {
   const [lists, setLists] = useState([]);
+
+  useEffect(() => {
+    async function getLists() {
+      const res = await fetch("http://localhost:3000/api/lists");
+      const { data } = await res.json();
+      setLists(data);
+    }
+    getLists();
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -15,10 +24,15 @@ export default function Home() {
       </Head>
 
       <main className={styles.grid}>
-        {lists.map((list) => {
+        {lists.map((list, index) => {
           return (
-            <div key={list}>
-              <List list={list} setLists={setLists} lists={lists} />
+            <div key={`${(list.name, index)}`}>
+              <List
+                defaultCards={list.cards}
+                list={list}
+                setLists={setLists}
+                lists={lists}
+              />
             </div>
           );
         })}
@@ -29,3 +43,9 @@ export default function Home() {
     </div>
   );
 }
+
+// export async function getServerSideProps() {
+//   const res = await fetch(`http://localhost:3000/api/lists/`);
+//   const { data } = await res.json();
+//   return { props: { defaultLists: data } };
+// }

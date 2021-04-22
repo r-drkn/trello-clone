@@ -5,19 +5,39 @@ import styles from "../styles/Home.module.css";
 export default function AddItem(props) {
   const [showInput, setShowInput] = useState(false);
   const [value, setValue] = useState("");
-  const { item, setItem, type } = props;
+  const { item, setItem, type, listId } = props;
+  console.log(item);
+  console.log(type);
 
   function handleChange(event) {
     setValue(event.target.value);
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const newItem =
+      type === "card"
+        ? { name: value, listId: listId }
+        : { name: value, cards: [] };
+
     if (value.length > 0) {
-      setItem([...item, value]);
+      await fetch(
+        `http://localhost:3000/api/${type === "card" ? "cards" : "lists"}/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newItem),
+        }
+      )
+        .then((res) => res.json)
+        .then((data) => console.log("success", data))
+        .catch((err) => console.error(err));
+      setItem([...item, newItem]);
       setShowInput(false);
       setValue("");
     }
-    event.preventDefault();
   }
   return (
     <div>
@@ -29,7 +49,7 @@ export default function AddItem(props) {
           }}
         >
           <span>+</span>
-          {type === "card" && item.length > 0 ? (
+          {item && type === "card" && item.length > 0 ? (
             <span>Add another card</span>
           ) : (
             <span>Add a {type}</span>

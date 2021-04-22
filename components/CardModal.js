@@ -3,7 +3,8 @@ import OutsideClickHandler from "react-outside-click-handler";
 import styles from "../styles/Card.module.css";
 
 export default function CardModal(props) {
-  const { modal, setModal } = props;
+  const { modal, setModal, card } = props;
+
   return (
     <div className={styles.modal}>
       <OutsideClickHandler
@@ -12,6 +13,9 @@ export default function CardModal(props) {
         }}
       >
         <div className={styles.card}>
+          <h3 className={styles.cardName}>{card.name}</h3>
+          <h4 className={styles.descriptionHeading}>Description</h4>
+          <p>{card.description}</p>
           <svg
             onClick={() => {
               setModal(false);
