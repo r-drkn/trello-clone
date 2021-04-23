@@ -8,10 +8,11 @@ const handler = nc()
   .post((req, res) => {
     try {
       const list = getList(req.body.listId);
-      const { cards } = list;
-      const card = { id: cards.length + 1, ...req.body };
-      cards.push(card);
-      res.json({ data: card });
+      if (list) {
+        const card = req.body;
+        list.cards.push(card);
+        res.json({ data: card });
+      }
     } catch (err) {
       console.error(err);
     }

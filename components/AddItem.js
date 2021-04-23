@@ -6,8 +6,6 @@ export default function AddItem(props) {
   const [showInput, setShowInput] = useState(false);
   const [value, setValue] = useState("");
   const { item, setItem, type, listId } = props;
-  console.log(item);
-  console.log(type);
 
   function handleChange(event) {
     setValue(event.target.value);
@@ -17,9 +15,9 @@ export default function AddItem(props) {
     event.preventDefault();
     const newItem =
       type === "card"
-        ? { name: value, listId: listId }
-        : { name: value, cards: [] };
-
+        ? { id: item.length + 1, name: value, listId: listId }
+        : { id: item.length + 1, name: value, cards: [] };
+    console.log(newItem);
     if (value.length > 0) {
       await fetch(
         `http://localhost:3000/api/${type === "card" ? "cards" : "lists"}/`,

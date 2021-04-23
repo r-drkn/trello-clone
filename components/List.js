@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import OutsideClickHandler from "react-outside-click-handler";
 import styles from "../styles/Home.module.css";
 import AddItem from "./AddItem";
@@ -9,13 +9,22 @@ export default function List({ list, setLists, lists, defaultCards }) {
   const [edit, setEdit] = useState(false);
   const [value, setValue] = useState(list.name);
 
-  function handleEdit(event) {
+  async function handleEdit(event) {
     event && event.preventDefault();
-    const edittedLists = lists.map((listToEdit) => {
-      return listToEdit.name === list.name ? value : listToEdit.name;
-    });
-    setLists(edittedLists);
-    setEdit(false);
+    let edittedList = list;
+    edittedList.name = value;
+    try {
+      setEdit(false);
+      await fetch(`http://localhost:3000/api/lists/${list.id}/`, {
+        method: "PATCH",
+        body: JSON.stringify(edittedList),
+      })
+        .then((res) => res.json)
+        .then((data) => console.log("success", data))
+        .catch((err) => console.error(err));
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   function handleChange(event) {
@@ -26,10 +35,9 @@ export default function List({ list, setLists, lists, defaultCards }) {
     <div className={styles.list}>
       {edit ? (
         <OutsideClickHandler
-          onOutsideClick={() => {
-            setEdit(false);
-            handleEdit();
+          onOutsideClick={(event) => {
             setValue(value);
+            handleEdit(event);
           }}
         >
           <form onSubmit={(event) => handleEdit(event)}>

@@ -14,10 +14,8 @@ export default function Card({ card, listId }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    console.log(card);
     let edittedCard = card;
     edittedCard.name = value;
-    console.log(edittedCard);
     await fetch(`http://localhost:3000/api/cards/${listId}/`, {
       method: "PATCH",
       body: JSON.stringify(edittedCard),

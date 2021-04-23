@@ -6,6 +6,7 @@ import AddItem from "../components/AddItem";
 
 export default function Home() {
   const [lists, setLists] = useState([]);
+  console.log(lists);
 
   useEffect(() => {
     async function getLists() {
