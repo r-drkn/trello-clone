@@ -9,13 +9,13 @@
   justify-content: center;
   align-items: center;
 }
-.card {
+.modalCard {
   height: 80vh;
   width: 60vw;
   background-color: #eee;
   border-radius: 0.5rem;
   position: relative;
-  padding-left: 1rem;
+  padding-left: 2rem;
 }
 .close {
   height: 2.5rem;
@@ -25,9 +25,65 @@
   cursor: pointer;
   margin: 0.5rem;
 }
-.cardName {
-  padding: 1rem;
-}
+
 .descriptionHeading {
-  padding: 1rem;
+  margin: 1rem 0rem;
+}
+.cardTitleModal {
+  padding-top: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.input {
+  height: 2rem;
+  border-radius: 0.2rem;
+  border: none;
+  background-color: #eee;
+  width: 100%;
+  margin-top: 1rem;
+}
+.buttonGroup {
+  display: flex;
+}
+.buttonSecondary {
+  background-color: rgb(255, 68, 68);
+  border-radius: 0.2rem;
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+}
+
+.button {
+  background-color: rgba(139, 238, 169);
+  border-radius: 0.2rem;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  display: block;
+  margin-right: 1rem;
+}
+.cardTitleText {
+  font-weight: 400;
+  width: 100%;
+  cursor: pointer;
+}
+.cardTitleWrapper input {
+  font-size: 1.5rem;
+  width: 90%;
+  border: 2px solid gray;
+  margin-bottom: 0.5rem;
+}
+.cardDescription {
+  width: 90%;
+  cursor: pointer;
+}
+.descriptionInput {
+  width: 90%;
+  font-size: 1rem;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-top: 0.5rem;
 }

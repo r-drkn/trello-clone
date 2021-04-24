@@ -1,21 +1,112 @@
-import React from "react";
+import React, { useState } from "react";
 import OutsideClickHandler from "react-outside-click-handler";
+import { handleCardEdit } from "../helpers/helpers";
 import styles from "../styles/Card.module.css";
+import CardTitle from "./CardTitle";
 
 export default function CardModal(props) {
-  const { modal, setModal, card } = props;
+  const { modal, setModal, card, listId } = props;
+  const [editDescription, setEditDescription] = useState(false);
+  const [descValue, setDescValue] = useState(card.description);
+
+  function handleChange(event) {
+    setDescValue(event.target.value);
+  }
 
   return (
     <div className={styles.modal}>
       <OutsideClickHandler
-        onOutsideClick={() => {
+        onOutsideClick={(event) => {
           setModal(false);
+          if (editDescription) {
+            handleCardEdit(
+              event,
+              card,
+              "description",
+              descValue,
+              setEditDescription,
+              listId
+            );
+          }
         }}
       >
-        <div className={styles.card}>
-          <h3 className={styles.cardName}>{card.name}</h3>
-          <h4 className={styles.descriptionHeading}>Description</h4>
-          <p>{card.description}</p>
+        <div className={styles.modalCard}>
+          <div className={styles.cardTitleWrapper}>
+            <CardTitle
+              card={card}
+              listId={listId}
+              modal={modal}
+              setModal={setModal}
+            />
+          </div>
+          <h4
+            className={styles.descriptionHeading}
+            onClick={() => {
+              setEditDescription(true);
+            }}
+          >
+            Description
+          </h4>
+          {editDescription ? (
+            <OutsideClickHandler
+              onOutsideClick={(event) => {
+                handleCardEdit(
+                  event,
+                  card,
+                  "description",
+                  descValue,
+                  setEditDescription,
+                  listId
+                );
+              }}
+            >
+              <form
+                onSubmit={(event) =>
+                  handleCardEdit(
+                    event,
+                    card,
+                    "description",
+                    descValue,
+                    setEditDescription,
+                    listId
+                  )
+                }
+                className={styles.descriptionForm}
+              >
+                <textarea
+                  className={styles.descriptionInput}
+                  type="text"
+                  value={descValue}
+                  onChange={(event) => handleChange(event)}
+                  rows={10}
+                  autoFocus
+                  onFocus={(e) => e.currentTarget.select()}
+                />
+                <div className={styles.buttonGroup}>
+                  <input type="submit" className={styles.button} value="Save" />
+                  <button
+                    className={styles.buttonSecondary}
+                    styles={{ backgroundColor: "red" }}
+                    onClick={() => {
+                      setDescValue(card.description);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </OutsideClickHandler>
+          ) : (
+            <p
+              className={styles.cardDescription}
+              onClick={() => {
+                setEditDescription(true);
+              }}
+            >
+              {card.description ? card.description : "Add a description..."}
+            </p>
+          )}
+
           <svg
             onClick={() => {
               setModal(false);

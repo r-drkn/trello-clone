@@ -47,8 +47,8 @@ export default function AddItem(props) {
           }}
         >
           <span>+</span>
-          {item && type === "card" && item.length > 0 ? (
-            <span>Add another card</span>
+          {item && item.length > 0 ? (
+            <span>Add another {type}</span>
           ) : (
             <span>Add a {type}</span>
           )}
@@ -70,6 +70,7 @@ export default function AddItem(props) {
                 onChange={handleChange}
                 placeholder={`Enter ${type} title`}
                 className={styles.input}
+                autoFocus
               />
               <div className={styles.buttonGroup}>
                 <input
