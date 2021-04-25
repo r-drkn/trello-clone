@@ -1,14 +1,29 @@
 import nc from "next-connect";
-import lists from "../../../data/data";
+import { connection } from "../../../lib/db";
 
 const handler = nc()
   .post((req, res) => {
-    console.log(req.body);
-    const list = { ...req.body, id: lists.length + 1 };
-    lists.push(list);
-    res.json({ data: list });
+    const list = { ...req.body };
+
+    connection.execute(
+      "INSERT INTO lists (name) VALUES(?)",
+      [list.name],
+      (err, results) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log("results:", results);
+        res.json({ data: results });
+      }
+    );
   })
   .get((req, res) => {
-    res.json({ data: lists });
+    connection.execute("SELECT * FROM lists", [], (err, results) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log("results:", results);
+      res.json({ data: results });
+    });
   });
 export default handler;
