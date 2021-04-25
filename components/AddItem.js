@@ -14,10 +14,7 @@ export default function AddItem(props) {
   async function handleSubmit(event) {
     event.preventDefault();
     const newItem =
-      type === "card"
-        ? { id: item.length + 1, name: value, listId: listId }
-        : { id: item.length + 1, name: value, cards: [] };
-    console.log(newItem);
+      type === "card" ? { name: value, list_id: listId } : { name: value };
     if (value.length > 0) {
       await fetch(
         `http://localhost:3000/api/${type === "card" ? "cards" : "lists"}/`,

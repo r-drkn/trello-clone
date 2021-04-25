@@ -1,21 +1,15 @@
-export async function handleCardEdit(
-  event,
-  card,
-  key,
-  value,
-  setState,
-  listId
-) {
+export async function handleCardEdit(event, card, key, value, setEdit) {
   event.preventDefault();
-  let edittedCard = card;
-  edittedCard[key] = value;
-  await fetch(`http://localhost:3000/api/cards/${listId}/`, {
+  await fetch(`http://localhost:3000/api/cards/${card.name}`, {
     method: "PATCH",
-    body: JSON.stringify(edittedCard),
+    body: JSON.stringify({
+      column: key,
+      value: value,
+      cardName: card.name,
+    }),
   })
     .then((res) => res.json)
     .then((data) => console.log("success", data))
     .catch((err) => console.error(err));
-
-  setState(false);
+  setEdit(false);
 }

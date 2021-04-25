@@ -3,7 +3,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import styles from "../styles/Card.module.css";
 import { handleCardEdit } from "../helpers/helpers";
 
-export default function CardTitle({ card, modal, setModal, listId }) {
+export default function CardTitle({ card, modal, setModal }) {
   const [value, setValue] = useState(card.name);
   const [editTitle, setEditTitle] = useState(false);
 
@@ -17,12 +17,12 @@ export default function CardTitle({ card, modal, setModal, listId }) {
         <div>
           <OutsideClickHandler
             onOutsideClick={(event) =>
-              handleCardEdit(event, card, "name", value, setEditTitle, listId)
+              handleCardEdit(event, card, "card_name", value, setEditTitle)
             }
           >
             <form
               onSubmit={(event) =>
-                handleCardEdit(event, card, "name", value, setEditTitle, listId)
+                handleCardEdit(event, card, "card_name", value, setEditTitle)
               }
             >
               <input

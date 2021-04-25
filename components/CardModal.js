@@ -13,6 +13,15 @@ export default function CardModal(props) {
     setDescValue(event.target.value);
   }
 
+  async function handleDelete() {
+    console.log(card.name);
+    const res = await fetch(`http://localhost:3000/api/cards/${card.name}`, {
+      method: "DELETE",
+    });
+    const { data } = res.json();
+    console.log(data);
+  }
+
   return (
     <div className={styles.modal}>
       <OutsideClickHandler
@@ -24,8 +33,7 @@ export default function CardModal(props) {
               card,
               "description",
               descValue,
-              setEditDescription,
-              listId
+              setEditDescription
             );
           }
         }}
@@ -55,8 +63,7 @@ export default function CardModal(props) {
                   card,
                   "description",
                   descValue,
-                  setEditDescription,
-                  listId
+                  setEditDescription
                 );
               }}
             >
@@ -86,7 +93,6 @@ export default function CardModal(props) {
                   <input type="submit" className={styles.button} value="Save" />
                   <button
                     className={styles.buttonSecondary}
-                    styles={{ backgroundColor: "red" }}
                     onClick={() => {
                       setDescValue(card.description);
                     }}
@@ -94,6 +100,12 @@ export default function CardModal(props) {
                     Cancel
                   </button>
                 </div>
+                <button
+                  className={styles.buttonSecondary}
+                  onClick={() => handleDelete()}
+                >
+                  Delete Card
+                </button>
               </form>
             </OutsideClickHandler>
           ) : (

@@ -1,24 +1,33 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import nc from "next-connect";
-import lists from "../../../data/data";
-
-const getList = (id) => lists.find((list) => list.id === parseInt(id));
+import { connection } from "../../../lib/db";
 
 const handler = nc()
   .post((req, res) => {
-    try {
-      const list = getList(req.body.listId);
-      if (list) {
-        const card = req.body;
-        list.cards.push(card);
-        res.json({ data: card });
+    const card = req.body;
+    console.log(card);
+    connection.execute(
+      "INSERT INTO cards (card_name, list_id) VALUES(?, ?)",
+      [card.name, card.list_id],
+      (err, results) => {
+        if (err) {
+          console.log(err);
+        }
+        res.json({ data: results });
       }
-    } catch (err) {
-      console.error(err);
-    }
+    );
   })
   .get((req, res) => {
-    res.json({ data: cards });
+    const listId = req.query.listId;
+    connection.execute(
+      `SELECT * FROM cards WHERE list_id = '${listId}'`,
+      (err, results) => {
+        if (err) {
+          console.log(err);
+        }
+        res.json({ data: results });
+      }
+    );
   });
 
 export default handler;

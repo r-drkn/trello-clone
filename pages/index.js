@@ -28,12 +28,7 @@ export default function Home() {
         {lists.map((list, index) => {
           return (
             <div key={`${(list.name, index)}`}>
-              <List
-                defaultCards={list.cards}
-                list={list}
-                setLists={setLists}
-                lists={lists}
-              />
+              <List list={list} setLists={setLists} lists={lists} />
             </div>
           );
         })}
