@@ -1,25 +1,29 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import OutsideClickHandler from "react-outside-click-handler";
 import { handleCardEdit } from "../helpers/helpers";
 import styles from "../styles/Card.module.css";
 import CardTitle from "./CardTitle";
+import { removeItem } from "../helpers/helpers";
+import { GlobalContext } from "../context/GlobalContextProvider";
 
 export default function CardModal(props) {
   const { modal, setModal, card, listId } = props;
   const [editDescription, setEditDescription] = useState(false);
   const [descValue, setDescValue] = useState(card.description);
+  const { cards, setCards } = useContext(GlobalContext);
 
   function handleChange(event) {
     setDescValue(event.target.value);
   }
 
   async function handleDelete() {
-    console.log(card.name);
     const res = await fetch(`http://localhost:3000/api/cards/${card.name}`, {
       method: "DELETE",
     });
     const { data } = res.json();
     console.log(data);
+    setCards(removeItem(cards, card));
+    setModal(false);
   }
 
   return (
@@ -100,12 +104,6 @@ export default function CardModal(props) {
                     Cancel
                   </button>
                 </div>
-                <button
-                  className={styles.buttonSecondary}
-                  onClick={() => handleDelete()}
-                >
-                  Delete Card
-                </button>
               </form>
             </OutsideClickHandler>
           ) : (
@@ -118,7 +116,13 @@ export default function CardModal(props) {
               {card.description ? card.description : "Add a description..."}
             </p>
           )}
-
+          <button
+            className={styles.buttonSecondary}
+            onClick={() => handleDelete()}
+            styles={{}}
+          >
+            Delete Card
+          </button>
           <svg
             onClick={() => {
               setModal(false);

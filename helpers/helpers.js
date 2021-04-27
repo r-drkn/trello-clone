@@ -13,3 +13,12 @@ export async function handleCardEdit(event, card, key, value, setEdit) {
     .catch((err) => console.error(err));
   setEdit(false);
 }
+
+export const removeItem = (array, item) => {
+  const result = [...array];
+  const index = result.indexOf(item);
+  if (index > -1) {
+    result.splice(index, 1);
+  }
+  return result;
+};

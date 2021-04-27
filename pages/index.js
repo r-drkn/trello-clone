@@ -1,12 +1,12 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 import List from "../components/List";
 import AddItem from "../components/AddItem";
+import { GlobalContext } from "../context/GlobalContextProvider";
 
 export default function Home() {
-  const [lists, setLists] = useState([]);
-  console.log(lists);
+  const { lists, setLists } = useContext(GlobalContext);
 
   useEffect(() => {
     async function getLists() {

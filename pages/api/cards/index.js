@@ -12,7 +12,7 @@ const handler = nc()
       (err, results) => {
         if (err) {
           console.log(err);
-        }
+        }    
         res.json({ data: results });
       }
     );

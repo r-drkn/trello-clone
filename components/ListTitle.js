@@ -7,14 +7,12 @@ export default function ListTitle({ list }) {
   const [value, setValue] = useState(list.name);
 
   async function handleEdit(event) {
-    event && event.preventDefault();
-    let edittedList = list;
-    edittedList.name = value;
+    event.preventDefault();
     try {
       setEdit(false);
-      await fetch(`http://localhost:3000/api/lists/${list.id}/`, {
+      await fetch(`http://localhost:3000/api/lists/${list.list_id}/`, {
         method: "PATCH",
-        body: JSON.stringify(edittedList),
+        body: value,
       })
         .then((res) => res.json)
         .then((data) => console.log("success", data))

@@ -1,20 +1,32 @@
 import nc from "next-connect";
-import lists from "../../../data/data";
-
-const getList = (id) => lists.find((list) => list.id === parseInt(id));
+import { connection } from "../../../lib/db";
 
 const handler = nc()
   .patch((req, res) => {
-    let list = getList(req.query.id);
-    const updated = JSON.parse(req.body);
-    list = updated;
+    const listId = req.query.id;
+    const value = req.body.replace("'", "\\'");
+    connection.execute(
+      `UPDATE lists SET name = '${value}' WHERE list_id = '${listId}'`,
+      (err, results) => {
+        if (err) {
+          throw err;
+        }
+        res.json(results);
+      }
+    );
   })
-  .post((req, res) => {
-    const list = { ...req.body, id: lists.length + 1 };
-    lists.push(list);
-    res.json({ data: list });
-  })
-  .get((req, res) => {
-    res.json({ data: lists });
+  .delete((req, res) => {
+    const listId = req.query.id;
+    console.log(listId);
+    connection.execute(
+      `DELETE FROM lists WHERE list_id = '${listId}'`,
+      (err, results) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log("deleted", results);
+        res.json(results);
+      }
+    );
   });
 export default handler;
